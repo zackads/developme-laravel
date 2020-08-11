@@ -10,4 +10,11 @@ class Owner extends Model
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function fullAddress(): string
+    {
+        return $this->address_2 ?
+        join(", ", [$this->address_1, $this->address_2, $this->town, $this->postcode]) :
+        join(", ", [$this->address_1, $this->town, $this->postcode]);
+    }
 }
