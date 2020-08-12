@@ -27,7 +27,7 @@
     @yield("content")
 </main>
 <footer>
-<em>Vet House Paradiso isn't really a vet.  No liability is accepted for any harm that may or may not come to your animal.</em>
+    @include("partials/footer")
 </footer>
 <!-- JS, Popper.js, and jQuery for Bootstrap-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
