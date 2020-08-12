@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Owner;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,5 +43,44 @@ class OwnerTest extends TestCase
     {
         $ownerFromDB = Owner::all()->first();
         $this->assertFalse($ownerFromDB::checkOwnerExists("g-shockw@casio.com"));
+    }
+
+    public function testTelephoneNumberTooLong()
+    {
+        $this->expectException(QueryException::class);
+
+        $ownerFromDB = Owner::all()->first();
+        $ownerFromDB->telephone = "012345678912312398120981023";
+        $ownerFromDB->save();
+    }
+
+    public function testValidPhoneNumber()
+    {
+        $ownerFromDB = Owner::all()->first();
+
+        $ownerFromDB->telephone = "07887654629"; // Valid
+        dump($ownerFromDB->validPhoneNumber());
+        $this->assertTrue($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "00441282616641"; // Valid
+        $this->assertTrue($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "0013126718855"; // Valid
+        $this->assertTrue($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "+441282616641"; // Invalid
+        $this->assertFalse($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "07887 654629"; // Invalid
+        $this->assertFalse($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "001 312 671 8855"; // Invalid
+        $this->assertFalse($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = "null"; // Invalid
+        $this->assertFalse($ownerFromDB->validPhoneNumber());
+
+        $ownerFromDB->telephone = ""; // Invalid
+        $this->assertFalse($ownerFromDB->validPhoneNumber());
     }
 }
