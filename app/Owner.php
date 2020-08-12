@@ -24,4 +24,21 @@ class Owner extends Model
         join(", ", [$this->address_1, $this->address_2, $this->town, $this->postcode]) :
         join(", ", [$this->address_1, $this->town, $this->postcode]);
     }
+
+    public function validPhoneNumber(): bool
+    {
+        if (gettype($this->telephone) !== "string") {
+            return false;
+        }
+
+        if (strlen($this->telephone) > 14 || strlen($this->telephone) < 7) {
+            return false;
+        }
+
+        if (!preg_match('/^\d*$/m', $this->telephone)) {
+            return false;
+        }
+
+        return true;
+    }
 }
