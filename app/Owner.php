@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
+    public static function checkOwnerExists($email)
+    {
+        return Owner::where('email', '=', $email)->get('email')->exists();
+    }
+
     public function fullName(): string
     {
         return "{$this->first_name} {$this->last_name}";

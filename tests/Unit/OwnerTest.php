@@ -24,4 +24,9 @@ class OwnerTest extends TestCase
         $this->assertSame($this->owner->telephone, "0121DOONE");
         $this->assertSame($this->owner->email, "f91w@casio.com");
     }
+
+    public function testEmailNotFound()
+    {
+        $this->assertFalse($this->owner::checkOwnerExists("gshock@casio.com"));
+    }
 }
