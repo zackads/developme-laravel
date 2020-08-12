@@ -35,7 +35,6 @@ class OwnerTest extends TestCase
     public function testEmailFound()
     {
         $ownerFromDB = Owner::all()->first();
-
         $this->assertTrue($ownerFromDB->checkOwnerExists("f91w@casio.com"));
     }
 
@@ -54,7 +53,7 @@ class OwnerTest extends TestCase
         $ownerFromDB->save();
     }
 
-    public function testValidPhoneNumber()
+    public function testValidPhoneNumberReturnsTrue()
     {
         $ownerFromDB = Owner::all()->first();
 
@@ -66,6 +65,11 @@ class OwnerTest extends TestCase
 
         $ownerFromDB->telephone = "0013126718855"; // Valid
         $this->assertTrue($ownerFromDB->validPhoneNumber());
+    }
+
+    public function testInvalidPhoneNumberReturnsFalse()
+    {
+        $ownerFromDB = Owner::all()->first();
 
         $ownerFromDB->telephone = "+441282616641"; // Invalid
         $this->assertFalse($ownerFromDB->validPhoneNumber());
