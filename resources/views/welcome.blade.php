@@ -1,6 +1,6 @@
 @extends("app")
 
-{{-- Use App\Owners::all() and @foreach to list all of your owners on the front page --}}
+@section("title") "Vet House Paradiso" @endsection
 
 @section("content")
 <h1>Welcome</h1>

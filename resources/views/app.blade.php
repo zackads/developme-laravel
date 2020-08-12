@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Vet House Paradiso</title>
+  <title>@yield('title')</title>
   <meta name="description" content="A 'different' vet based in Cotham, Bristol.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
