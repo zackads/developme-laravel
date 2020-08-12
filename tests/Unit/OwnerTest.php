@@ -3,30 +3,44 @@
 namespace Tests\Unit;
 
 use App\Owner;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class OwnerTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->owner = new Owner;
-        $this->owner->first_name = "Watchy";
-        $this->owner->last_name = "McWatchface";
-        $this->owner->telephone = "0121DOONE";
-        $this->owner->email = "f91w@casio.com";
+        Owner::create([
+            "first_name" => "Watchy",
+            "last_name" => "McWatchface",
+            "telephone" => "0121DOONE",
+            "email" => "f91w@casio.com",
+        ]);
     }
 
     public function testFieldsAreCorrect()
     {
-        $this->assertSame($this->owner->first_name, "Watchy");
-        $this->assertSame($this->owner->last_name, "McWatchface");
-        $this->assertSame($this->owner->telephone, "0121DOONE");
-        $this->assertSame($this->owner->email, "f91w@casio.com");
+        $ownerFromDB = Owner::all()->first();
+
+        $this->assertSame($ownerFromDB->first_name, "Watchy");
+        $this->assertSame($ownerFromDB->last_name, "McWatchface");
+        $this->assertSame($ownerFromDB->telephone, "0121DOONE");
+        $this->assertSame($ownerFromDB->email, "f91w@casio.com");
+    }
+
+    public function testEmailFound()
+    {
+        $ownerFromDB = Owner::all()->first();
+
+        $this->assertTrue($ownerFromDB->checkOwnerExists("f91w@casio.com"));
     }
 
     public function testEmailNotFound()
     {
-        $this->assertFalse($this->owner::checkOwnerExists("gshock@casio.com"));
+        $ownerFromDB = Owner::all()->first();
+        $this->assertFalse($ownerFromDB::checkOwnerExists("g-shockw@casio.com"));
     }
 }
