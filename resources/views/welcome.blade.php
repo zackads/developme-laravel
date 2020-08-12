@@ -1,8 +1,14 @@
 @extends("app")
 
+{{-- Use App\Owners::all() and @foreach to list all of your owners on the front page --}}
+
 @section("content")
 <h1>Welcome</h1>
 <p>Welcome to the Vet House Paradiso.<p>
-<img src="https://a.ltrbxd.com/resized/sm/upload/k6/2s/3l/85/guest-house-paradiso-1200-1200-675-675-crop-000000.jpg?k=fd7aaeaa17" alt="Guest House Paradiso still" width="200px"/>
-<em>Where your pet comes first!</em>
-@endsection
+        <img src="https://a.ltrbxd.com/resized/sm/upload/k6/2s/3l/85/guest-house-paradiso-1200-1200-675-675-crop-000000.jpg?k=fd7aaeaa17"
+            alt="Guest House Paradiso still" width="200px" />
+        <em>Where your pet comes first!</em>
+
+        @include("partials/owners_table")
+
+        @endsection
