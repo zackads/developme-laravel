@@ -41,4 +41,9 @@ class Owner extends Model
 
         return true;
     }
+
+    public function formattedPhoneNumber(): string
+    {
+        return substr($this->telephone, 0, 4) . " " . substr($this->telephone, 4, 3) . " " . substr($this->telephone, 7, 4);
+    }
 }

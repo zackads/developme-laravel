@@ -59,7 +59,6 @@ class OwnerTest extends TestCase
         $ownerFromDB = Owner::all()->first();
 
         $ownerFromDB->telephone = "07887654629"; // Valid
-        dump($ownerFromDB->validPhoneNumber());
         $this->assertTrue($ownerFromDB->validPhoneNumber());
 
         $ownerFromDB->telephone = "00441282616641"; // Valid
@@ -82,5 +81,16 @@ class OwnerTest extends TestCase
 
         $ownerFromDB->telephone = ""; // Invalid
         $this->assertFalse($ownerFromDB->validPhoneNumber());
+    }
+
+    public function testFormattedPhoneNumber()
+    {
+        $ownerFromDB = Owner::all()->first();
+
+        $ownerFromDB->telephone = "07887654629";
+        $this->assertSame($ownerFromDB->formattedPhoneNumber(), "0788 765 4629");
+
+        $ownerFromDB->telephone = "01174927728";
+        $this->assertSame($ownerFromDB->formattedPhoneNumber(), "0117 492 7728");
     }
 }
