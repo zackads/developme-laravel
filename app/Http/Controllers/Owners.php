@@ -9,8 +9,14 @@ class Owners extends Controller
     public function index()
     {
         return view("owners", [
-            // pass in all the owners
             "owners" => Owner::all(),
+        ]);
+    }
+
+    public function show(Owner $owner)
+    {
+        return view("owner", [
+            "owner" => $owner,
         ]);
     }
 }
