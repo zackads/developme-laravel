@@ -23,4 +23,10 @@ class RouteTest extends TestCase
         $response = $this->get('/doesntexist');
         $response->assertStatus(404);
     }
+
+    public function testOwners()
+    {
+        $response = $this->get('/owners');
+        $response->assertStatus(200);
+    }
 }
