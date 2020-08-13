@@ -6,7 +6,7 @@ use App\Owner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class RouteTest extends TestCase
+class RoutesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -14,12 +14,6 @@ class RouteTest extends TestCase
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-    }
-
-    public function testRootViewIsWelcome()
-    {
-        $response = $this->get('/');
-        $response->assertViewIs('welcome');
     }
 
     public function testInvalidSubdirectory()
