@@ -34,12 +34,20 @@ class RouteTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testOwnerShow()
+    public function testOwnerShowReturns200ForValidId()
     {
         factory(Owner::class)->make()->save();
         $first_owner = Owner::first()->id;
         $response = $this->get("/owners/{$first_owner}");
 
         $response->assertStatus(200);
+    }
+
+    public function testOwnerShowReturns404ForInvalidId()
+    {
+        $invalid_owner_id = Owner::count() + 1;
+        $response = $this->get("/owners/{$invalid_owner_id}");
+
+        $response->assertStatus(404);
     }
 }
