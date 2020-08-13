@@ -9,8 +9,8 @@
             <h5 class="mb-1">{{ $owner->fullName() }}</h5>
             <small>{{ $owner->fullAddress() }}</small>
         </div>
-
     </a>
 </div>
 @endforeach
+{{ $owners->links() }}
 @endif

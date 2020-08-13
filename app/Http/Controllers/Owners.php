@@ -9,7 +9,7 @@ class Owners extends Controller
     public function index()
     {
         return view("owners", [
-            "owners" => Owner::all(),
+            "owners" => Owner::paginate(5),
         ]);
     }
 
