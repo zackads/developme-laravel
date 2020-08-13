@@ -19,13 +19,15 @@ class Home extends Controller
         $hour = date('H');
 
         if ($hour < 12) {
-            return "morning";
+            $welcomeMsg = "morning";
         }
         if ($hour >= 12 && $hour < 17) {
-            return "afternoon";
+            $welcomeMsg = "afternoon";
         }
         if ($hour >= 17) {
-            return "evening";
+            $welcomeMsg = "evening";
         }
+
+        return $welcomeMsg;
     }
 }
