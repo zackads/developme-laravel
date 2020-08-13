@@ -1,4 +1,4 @@
-@if (count($owners) === 0)
+@if ($owners->isEmpty())
 <em>There are no owners sad_face.jpg</em>
 @else
 @foreach ($owners as $owner)
