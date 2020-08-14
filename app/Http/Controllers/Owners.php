@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OwnerRequest;
 use App\Owner;
-use Illuminate\Http\Request;
 
 class Owners extends Controller
 {
@@ -26,7 +26,7 @@ class Owners extends Controller
         return view("form");
     }
 
-    public function createOwner(Request $request)
+    public function createOwner(OwnerRequest $request)
     {
         // accept the Request object
         // this gives us access to the submitted data public function createOwner(Request $request) {
