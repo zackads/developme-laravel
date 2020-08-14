@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
-    protected $fillable = ['first_name', 'last_name', 'telephone', 'email'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'telephone', 'address_1', 'address_2', 'town', 'postcode'];
 
     public static function checkOwnerExists($email)
     {
