@@ -18,6 +18,7 @@ class CreateAnimalsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name", 100);
+            $table->string("type", 100);
             $table->date("dob");
             $table->decimal("weight", 6, 2);
             $table->decimal("height", 6, 2);
