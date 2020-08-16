@@ -46,4 +46,9 @@ class Owner extends Model
     {
         return substr($this->telephone, 0, 4) . " " . substr($this->telephone, 4, 3) . " " . substr($this->telephone, 7, 4);
     }
+
+    public function animals()
+    {
+        return $this->hasMany(Animal::class);
+    }
 }
