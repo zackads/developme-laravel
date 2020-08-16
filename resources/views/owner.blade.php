@@ -1,4 +1,5 @@
 @extends("app")
+@section("title") Owner - {{ $owner->fullName() }} @endsection
 @section("content")
 <div class="card">
     <h2 class="card-header">{{ $owner->fullName() }}</h2>
