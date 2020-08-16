@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Animal;
 use App\Http\Controllers\Controller;
 use App\Owner;
 use Illuminate\Http\Request;
@@ -40,6 +41,20 @@ class Owners extends Controller
     public function show(Owner $owner)
     {
         return $owner;
+    }
+
+    public function showAnimals(Owner $owner)
+    {
+        return $owner->animals;
+    }
+
+    public function storeAnimal(Request $request, Owner $owner)
+    {
+        $data = $request->all();
+        $data['owner_id'] = $owner->id;
+
+        // return gettype($data);
+        return Animal::create($data);
     }
 
     /**

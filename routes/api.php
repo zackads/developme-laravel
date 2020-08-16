@@ -38,7 +38,16 @@ Route::group(["prefix" => "owners"], function () {
         Route::put("", [Owners::class, "update"]);
 
         // DELETE /Owners/8: delete the owner
-        Route::delete("", [Owners::class, "destroy"]);});
+        Route::delete("", [Owners::class, "destroy"]);
+
+        Route::group(["prefix" => "animals"], function () {
+            // GET /owners/<id>/animals
+            Route::get("", [Owners::class, "showAnimals"]);
+
+            // POST /owners/<id>/animals: create a new animal owner by owner
+            Route::post("", [Owners::class, "storeAnimal"]);
+        });
+    });
 });
 
 Route::group(["prefix" => "animals"], function () {
