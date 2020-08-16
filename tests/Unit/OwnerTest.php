@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Owner;
-use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,15 +41,6 @@ class OwnerTest extends TestCase
     {
         $ownerFromDB = Owner::all()->first();
         $this->assertFalse($ownerFromDB::checkOwnerExists("g-shockw@casio.com"));
-    }
-
-    public function testTelephoneNumberTooLong()
-    {
-        $this->expectException(QueryException::class);
-
-        $ownerFromDB = Owner::all()->first();
-        $ownerFromDB->telephone = "012345678912312398120981023";
-        $ownerFromDB->save();
     }
 
     public function testValidPhoneNumberReturnsTrue()
