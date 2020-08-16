@@ -10,4 +10,9 @@ class Animal extends Model
     {
         return $this->belongsTo(Owner::class);
     }
+
+    public function dangerous()
+    {
+        return $this->biteyness >= 3;
+    }
 }
