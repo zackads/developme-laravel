@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Animals;
 use App\Http\Controllers\API\Owners;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,15 @@ Route::group(["prefix" => "owners"], function () {
 
         // DELETE /Owners/8: delete the owner
         Route::delete("", [Owners::class, "destroy"]);});
+});
+
+Route::group(["prefix" => "animals"], function () {
+    Route::get("", [Animals::class, "index"]);
+
+    Route::post("", [Animals::class, "store"]);
+
+    Route::group(["prefix" => "{animal}"], function () {
+        Route::get("", [Animals::class, "show"]);
+        Route::put("", [Animals::class, "update"]);
+        Route::delete("", [Animals::class, "destroy"]);});
 });
