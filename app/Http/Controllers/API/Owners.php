@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Animal;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\OwnerRequest;
 use App\Owner;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class Owners extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OwnerRequest $request)
     {
         $data = $request->all();
 
@@ -48,7 +49,7 @@ class Owners extends Controller
         return $owner->animals;
     }
 
-    public function storeAnimal(Request $request, Owner $owner)
+    public function storeAnimal(OwnerRequest $request, Owner $owner)
     {
         $data = $request->all();
         $data['owner_id'] = $owner->id;
@@ -64,7 +65,7 @@ class Owners extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Owner $owner)
+    public function update(OwnerRequest $request, Owner $owner)
     {
         $data = $request->all();
 
