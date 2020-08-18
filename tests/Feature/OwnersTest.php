@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Owner;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,9 +11,15 @@ class OwnersTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        factory(User::class)->create()->save();
+    }
+
     public function testOwnersShowsNoRecords()
     {
-        $response = $this->get('/owners');
+        $response = $this->actingAs(User::first())->get('/owners');
         $response->assertSeeText("There are no owners sad_face.jpg");
     }
 
@@ -20,7 +27,7 @@ class OwnersTest extends TestCase
     {
         factory(Owner::class)->make()->save();
 
-        $response = $this->get('/owners');
+        $response = $this->actingAs(User::first())->get('/owners');
 
         $full_name = Owner::first()->fullName();
         $response->assertSeeText($full_name);
@@ -30,7 +37,7 @@ class OwnersTest extends TestCase
     {
         factory(Owner::class)->make()->save();
 
-        $response = $this->get('/owners');
+        $response = $this->actingAs(User::first())->get('/owners');
 
         $address = Owner::first()->fullAddress();
         $response->assertSeeText($address);

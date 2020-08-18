@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Owner;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,25 +23,37 @@ class RoutesTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testOwners()
+    public function testAuthenticationRequiredOnOwners()
     {
         $response = $this->get('/owners');
+        $response->assertStatus(302);
+    }
+
+    public function testOwners()
+    {
+        factory(User::class)->create()->save();
+
+        $response = $this->actingAs(User::first())->get('/owners');
         $response->assertStatus(200);
     }
 
     public function testOwnerShowReturns200ForValidId()
     {
         factory(Owner::class)->make()->save();
+        factory(User::class)->create()->save();
+
         $first_owner = Owner::first()->id;
-        $response = $this->get("/owners/{$first_owner}");
+        $response = $this->actingAs(User::first())->get("/owners/{$first_owner}");
 
         $response->assertStatus(200);
     }
 
     public function testOwnerShowReturns404ForInvalidId()
     {
+        factory(User::class)->create()->save();
+
         $invalid_owner_id = Owner::count() + 1;
-        $response = $this->get("/owners/{$invalid_owner_id}");
+        $response = $this->actingAs(User::first())->get("/owners/{$invalid_owner_id}");
 
         $response->assertStatus(404);
     }
