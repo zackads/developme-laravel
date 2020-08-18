@@ -14,16 +14,18 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group(["prefix" => "owners"], function () {
-    // add *above* route with URL parameter
-    // otherwise 'create' will get included in that
-    Route::get('create', "Owners@create");
-    Route::post('create', "owners@createOwner");
-
-    Route::get('{owner}', "Owners@show");
+    Route::group(["middleware" => "auth"], function () {
+        // add *above* route with URL parameter
+        // otherwise 'create' will get included in that
+        Route::get('create', "Owners@create");
+        Route::post('create', "owners@createOwner");
+        Route::get('{owner}', "Owners@show");
+        Route::get('', "Owners@index");
+    });
 });
 
 Route::get('/', "Home@index");
 
-Route::get('/owners', "Owners@index");
+Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('/owners/{owner}', "Owners@show");
+Auth::routes(['register' => false]);
