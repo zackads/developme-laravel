@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Animal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\OwnerRequest;
+use App\Http\Resources\API\OwnerListResource;
+use App\Http\Resources\API\OwnerResource;
 use App\Owner;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class Owners extends Controller
      */
     public function index()
     {
-        return Owner::all();
+        return OwnerListResource::collection(Owner::all());
     }
 
     /**
@@ -30,7 +32,9 @@ class Owners extends Controller
     {
         $data = $request->all();
 
-        return Owner::create($data);
+        $owner = Owner::create($data);
+
+        return new OwnerResource($article);
     }
 
     /**
@@ -41,7 +45,7 @@ class Owners extends Controller
      */
     public function show(Owner $owner)
     {
-        return $owner;
+        return new OwnerResource($owner);
     }
 
     public function showAnimals(Owner $owner)
@@ -51,11 +55,11 @@ class Owners extends Controller
 
     public function storeAnimal(OwnerRequest $request, Owner $owner)
     {
-        $data = $request->all();
-        $data['owner_id'] = $owner->id;
+        $animal = new Animal($request->all());
 
-        // return gettype($data);
-        return Animal::create($data);
+        $owner->animals()->save($animal);
+
+        return redirect("/animals/{$owner->id}");
     }
 
     /**
@@ -67,11 +71,12 @@ class Owners extends Controller
      */
     public function update(OwnerRequest $request, Owner $owner)
     {
-        $data = $request->all();
+        $owner = Owner::find($id);
 
+        $data = $request->all();
         $owner->fill($data)->save();
 
-        return $owner;
+        return new OwnerResource($owner);
     }
 
     /**
