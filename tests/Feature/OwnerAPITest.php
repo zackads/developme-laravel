@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Owner;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class OwnerAPITest extends TestCase
@@ -21,12 +20,20 @@ class OwnerAPITest extends TestCase
 
     public function testListAllOwners()
     {
-        $response = $this->actingAs(User::first())->json('GET', '/api/owners', ['accept' => "application/json"]);
-
-        Log::debug($response->getContent());
+        $response = $this->actingAs(User::first())
+            ->json('GET', '/api/owners', ['Accept' => "application/json"]);
 
         $response
             ->assertStatus(200)
             ->assertJsonPath('data.0.name', Owner::first()->fullName());
+    }
+
+    public function testCORS()
+    {
+        $response = $this->actingAs(User::first())
+            ->json('GET', '/api/owners',
+                ['Accept' => "application/json", "Origin" => "wombats.co.uk"]);
+
+        $response->assertStatus(200)->assertHeader("Access-Control-Allow-Origin", $value = "*");
     }
 }
