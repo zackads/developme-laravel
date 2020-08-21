@@ -31,4 +31,9 @@ class Animal extends Model
 
         return $this;
     }
+
+    public function getTreatments()
+    {
+        return $this->treatments->pluck("name")->all();
+    }
 }

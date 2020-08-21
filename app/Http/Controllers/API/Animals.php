@@ -6,7 +6,7 @@ use App\Animal;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\AnimalListResource;
 use App\Http\Resources\API\AnimalResource;
-use Illuminate\Http\Request;
+use App\Http\Requests\API\AnimalRequest;
 
 class Animals extends Controller
 {
@@ -26,7 +26,7 @@ class Animals extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnimalRequest $request)
     {
         $data = $request->only(["id", "name", "type", "dob", "weight", "height", "biteyness", "owner_id"]);
 
@@ -53,7 +53,7 @@ class Animals extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Animal $animal)
+    public function update(AnimalRequest $request, Animal $animal)
     {
         $data = $request->only(["id", "name", "address", "dob", "weight", "height", "biteyness"]);
 
