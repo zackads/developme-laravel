@@ -24,7 +24,7 @@ class TreatmentFromStringTest extends TestCase
         Treatment::fromStrings("this should be an array");
     }
 
-    public function testFromStringReturnsInstanceOfTreatment()
+    public function testReturnsInstanceOfTreatment()
     {
         $result = Treatment::fromString("Fel-O-Vax Lv-K");
 
@@ -32,7 +32,7 @@ class TreatmentFromStringTest extends TestCase
         $this->assertSame("Fel-O-Vax Lv-K", $result->name);
     }
 
-    public function testFromStringTrimsInput()
+    public function testTrimsInput()
     {
         $result = Treatment::fromString(" Fel-O-Vax Lv-K   ");
 
@@ -40,7 +40,7 @@ class TreatmentFromStringTest extends TestCase
         $this->assertSame("Fel-O-Vax Lv-K", $result->name);
     }
 
-    public function testFromStringSavesToDB()
+    public function testSavesToDB()
     {
         Treatment::fromString("Fel-O-Vax Lv-K");
 
@@ -49,7 +49,7 @@ class TreatmentFromStringTest extends TestCase
         $this->assertSame("Fel-O-Vax Lv-K", $treatmentFromDB->name);
     }
 
-    public function testFromStringDoesntSaveExistingTreatmentToDB()
+    public function testDoesntSaveExistingTreatmentToDB()
     {
         Treatment::fromString("Fel-O-Vax Lv-K");
         Treatment::fromString("Fel-O-Vax Lv-K");
