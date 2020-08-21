@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Animal;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\AnimalListResource;
+use App\Http\Resources\API\AnimalResource;
 use Illuminate\Http\Request;
 
 class Animals extends Controller
@@ -27,9 +28,11 @@ class Animals extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->only(["id", "name", "type", "dob", "weight", "height", "biteyness", "owner_id"]);
 
-        return Animal::create($data);
+        $animal = Animal::create($data)->setTreatments(["Veda-Sorb Bolus", "Keto-Gel", "QuickDerm Wound Ointment"]);
+
+        return new AnimalResource($animal);
     }
 
     /**
@@ -40,7 +43,7 @@ class Animals extends Controller
      */
     public function show(Animal $animal)
     {
-        return $animal;
+        return new AnimalResource($animal);
     }
 
     /**
@@ -52,11 +55,13 @@ class Animals extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        $data = $request->all();
+        $data = $request->only(["id", "name", "address", "dob", "weight", "height", "biteyness"]);
 
         $animal->fill($data)->save();
 
-        return $animal;
+        $animal->setTreatments($request->get("treatments"));
+
+        return new AnimalResource($animal);
     }
 
     /**

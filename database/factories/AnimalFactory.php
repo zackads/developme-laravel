@@ -4,6 +4,7 @@
 
 use App\Animal;
 use Faker\Generator as Faker;
+use App\Owner;
 
 $factory->define(Animal::class, function (Faker $faker) {
     $names = ["Loki", "Spot", "Sparky", "Lassie", "Rocket", "Rupert", "Yogi"];
@@ -15,6 +16,6 @@ $factory->define(Animal::class, function (Faker $faker) {
         "dob" => $faker->date($format = 'Y-m-d', $max = 'now'),
         "weight" => rand(10, 100) / 10,
         "height" => rand(10, 30) / 10,
-        "biteyness" => rand(1, 5),
+        "biteyness" => rand(1, 5)
     ];
 });
