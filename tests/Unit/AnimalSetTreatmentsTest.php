@@ -38,4 +38,13 @@ class AnimalSetTreatments extends TestCase
         $this->assertSame($treatment_strings[1], $animal->treatments->find(2)->name);
         $this->assertSame($treatment_strings[2], $animal->treatments->find(3)->name);
     }
+
+    public function testTreatmentRejectsInvalidIntenger()
+    {
+        $this->expectException("TypeError");
+        $animal = Animal::all()->random();
+        $treatment_strings = 1664;
+
+        $animal->setTreatments($treatment_strings);
+    }
 }
